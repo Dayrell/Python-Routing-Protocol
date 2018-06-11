@@ -67,6 +67,9 @@ class Roteador:
         elif comando[0] == 'trace':
             self.trace(comando[1])
 
+        elif comando[0] == 'quit':
+            sys.exit(1)
+
     # define qual o tipo da mensagem recebida
     def define_tipo_mensagem(self, mensagem):
         mensagem = mensagem.decode('utf-8')
@@ -117,7 +120,7 @@ class Roteador:
         removido = False
 
         for roteador in self.ultimo_update:
-            tolerancia = self.ultimo_update[roteador] + datetime.timedelta(seconds=self.period*3)
+            tolerancia = self.ultimo_update[roteador] + datetime.timedelta(seconds=self.period*4)
 
             if hora_atual > tolerancia:
                 removido = roteador
@@ -297,10 +300,7 @@ class Roteador:
         while True:
             comando = input()
             
-            # try:
             self.executa_comando(comando)
-            # except:
-            #     print ('Comando invalido. Tente novamente')
 
 # inicia as tres threads
 def inicia_roteador(addr, period, startup):
